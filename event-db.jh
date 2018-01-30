@@ -1,0 +1,58 @@
+enum Priority {
+    LOW, MEDIUM, HIGH
+}
+
+entity Region {
+	regionCode String required,
+	regionName String
+}
+
+entity Country {
+	countryCode String required,
+	countryName String
+}
+
+entity Company{
+	companyKey String required,
+    comapnyName String,
+    companyDescription String,
+    dateCreated Instant,
+    dateLastUpdate Instant,
+    createdBy Integer,
+    updatedBy Integer,
+    dateCeased Instant
+}
+
+entity Incident{
+	incidentNumber Integer required,
+    companyKey String,
+    priority Priority,
+    dateCreated Instant,
+    createdBy Integer,
+    dateLastUpdated Instant,
+    updatedBy Integer,
+}
+
+entity IncidentActivity{
+  eventNumber Integer,
+  dateCreated Instant,
+  createdBy Integer,
+  dateLastUpdated Instant,
+  updatedBy Instant
+}
+/*
+*	FromEntity{toEntity} to toEntity{toEntityFieldName(fromEntityField)}
+*/
+relationship OneToMany{
+   Country{region} to Region{countryCode(id) required},
+   Region{incident} to Incident{region(id) required},
+  Company{incident} to Incident{company(id) required},
+  Incident{incidentActivity} to 
+  		IncidentActivity{incidentNumber(incidentNumber)}
+}
+
+dto * with mapstruct
+// Set an angular suffix to event module name
+angularSuffix * with incident
+service Incident with serviceClass
+service IncidentActivity with serviceClass

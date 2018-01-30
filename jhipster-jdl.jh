@@ -1,0 +1,53 @@
+enum Priority {
+    LOW, MEDIUM, HIGH
+}
+
+entity Region {
+	regionCode String,
+	regionName String
+}
+
+entity Country {
+	countryCode String,
+	countryName String
+}
+
+entity Company{
+	companyKey String,
+    comapnyName String,
+    companyDescription String,
+    dateCreated Instant,
+    dateLastUpdate Instant,
+    createdBy Integer,
+    updatedBy Integer,
+    dateCeased Instant
+}
+
+entity Incident{
+	incidentNumber Integer,
+    companyKey String,
+    priority Priority,
+    dateCreated Instant,
+    createdBy Integer,
+    dateLastUpdated Instant,
+    updatedBy Integer,
+}
+
+entity IncidentActivity{
+  eventNumber Integer,
+  dateCreated Instant,
+  createdBy Integer,
+  dateLastUpdated Instant,
+  updatedBy Instant
+}
+
+relationship OneToMany{
+   Country{countryCode} to Region{country(countryCode)},
+   Region{regionCode} to Incident{region(regionCode)},
+  Company{companeyKey} to Incident{company(companyKey)},
+  Incident{incidentNumber} to IncidentActivity{incident(incidentNumber)}
+}
+
+dto * with mapstruct
+// Set an angular suffix
+angularSuffix * with mySuffix
