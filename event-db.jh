@@ -14,7 +14,7 @@ entity Country {
 
 entity Company{
 	companyKey String required,
-    comapnyName String,
+    companyName String,
     companyDescription String,
     dateCreated Instant,
     dateLastUpdate Instant,
@@ -47,7 +47,7 @@ relationship OneToMany{
    Country{region} to Region{countryCode(id) required},
    Region{incident} to Incident{region(id) required},
   Company{incident} to Incident{company(id) required},
-  Incident{incidentActivity} to 
+  Incident{incidentActivity} to
   		IncidentActivity{incidentNumber(incidentNumber)}
 }
 
